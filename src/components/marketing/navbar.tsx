@@ -20,8 +20,8 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-background/90 border-b border-border",
-        isScrolled ? "py-2 shadow-sm" : "py-4"
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md",
+        isScrolled ? "py-2" : "py-4"
       )}
     >
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
@@ -65,7 +65,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full z-40 bg-background/95 backdrop-blur-md shadow-md border-t border-border p-4">
+        <div className="lg:hidden absolute top-full left-0 w-full z-40 backdrop-blur-md bg-transparent p-4">
           <ul className="space-y-4">
             <li>
               <Link

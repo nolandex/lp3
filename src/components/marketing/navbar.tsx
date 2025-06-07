@@ -34,46 +34,44 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-background/95 backdrop-blur-sm",
-        isScrolled ? "py-2 shadow-md" : "py-4"
-      )}
-    >
-      <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav className="relative flex justify-between items-center">
-          {/* Left: Logo */}
-          <div className="flex items-center flex-1">
-            <Link
-              href="/"
-              className="text-lg font-bold text-foreground"
-            >
-              Bisnovo
-            </Link>
-          </div>
+    <div className="relative w-full h-full overflow-x-hidden">
+      <header
+        className={cn(
+          "fixed top-0 left-0 w-full z-[100] transition-all duration-300 bg-background/95 backdrop-blur-sm",
+          isScrolled ? "py-2 shadow-md" : "py-4"
+        )}
+      >
+        <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 backdrop-blur-lg rounded-xl lg:rounded-2xl border border-[rgba(124,124,124,0.2)]">
+          <div className="flex items-center justify-between w-full">
+            {/* Left: Logo */}
+            <div className="flex items-center flex-1 pl-1">
+              <Link
+                href="/"
+                className="text-lg font-bold text-foreground"
+              >
+                Bisnovo
+              </Link>
+              <div className="items-center hidden ml-4 lg:flex">
+                <Menu />
+              </div>
+            </div>
 
-          {/* Center: Desktop Menu */}
-          <div className="hidden md:flex items-center justify-center gap-6 flex-1">
-            <Menu />
+            {/* Right: Mobile Menu Toggle */}
+            <div className="md:hidden flex items-center flex-1 justify-end">
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setIsOpen((prev) => !prev)}
+                className="p-2 w-8 h-8 hover:bg-deep-purple-50 focus:bg-deep-purple-50 focus:outline-none"
+              >
+                {isOpen ? <XIcon className="w-4 h-4 duration-300" /> : <Icons.menu className="w-3.5 h-3.5 duration-300" />}
+              </Button>
+            </div>
           </div>
-
-          {/* Right: Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center gap-x-4 flex-1 justify-end">
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => setIsOpen(true)}
-              className="p-2 w-10 h-10 hover:bg-deep-purple-50 focus:bg-deep-purple-50 focus:outline-none"
-            >
-              <Icons.menu className="w-6 h-6" />
-            </Button>
-          </div>
-
-          {/* Mobile Menu */}
           <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
-        </nav>
-      </Wrapper>
-    </header>
+        </Wrapper>
+      </header>
+    </div>
   );
 };
 

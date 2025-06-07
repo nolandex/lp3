@@ -9,8 +9,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[rgba(10,10,10,0.6)] backdrop-blur-md">
+    <header className="fixed top-0 left-0 w-full z-50 bg-[rgba(10,10,10,0.6)] backdrop-blur-md">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 text-white font-semibold text-lg">
@@ -44,33 +44,33 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-      </nav>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="lg:hidden w-full px-4 pb-6 pt-4 bg-[rgba(10,10,10,0.6)] backdrop-blur-md absolute top-16 left-0 z-40">
-          <ul className="space-y-4 text-white">
-            <li>
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/product"
-                onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors"
-              >
-                Product
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="lg:hidden w-full px-4 pb-6 pt-4">
+            <ul className="space-y-4 text-white">
+              <li>
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  className="block text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/product"
+                  onClick={() => setIsOpen(false)}
+                  className="block text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Product
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
+      </nav>
     </header>
   )
 }

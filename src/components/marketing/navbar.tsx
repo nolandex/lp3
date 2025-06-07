@@ -17,10 +17,17 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md",
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-[rgba(10,10,10,0.8)] backdrop-blur-md",
         isScrolled ? "py-2" : "py-4"
       )}
     >
@@ -56,7 +63,11 @@ const Navbar = () => {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </Button>
@@ -65,7 +76,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full z-40 backdrop-blur-md bg-transparent p-4">
+        <div className="lg:hidden absolute top-full left-0 w-full z-40 bg-[rgba(10,10,10,0.8)] backdrop-blur-md p-4">
           <ul className="space-y-4">
             <li>
               <Link

@@ -1,16 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto'
-  }, [isOpen])
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
@@ -52,7 +48,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden w-full z-40 px-4 pb-6 pt-4 bg-[rgba(10,10,10,0.6)] backdrop-blur-md absolute top-16 left-0">
+        <div className="lg:hidden w-full px-4 pb-6 pt-4 bg-[rgba(10,10,10,0.6)] backdrop-blur-md absolute top-16 left-0 z-40">
           <ul className="space-y-4 text-white">
             <li>
               <Link

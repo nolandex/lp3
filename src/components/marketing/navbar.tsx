@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect,/`useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -52,7 +52,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden w-full z-40 px-4 pb-6 pt-4 bg-[rgba(10,10,10,0.6)] backdrop-blur-md">
+        <div className="lg:hidden w-full z-40 px-4 pb-6 pt-4 backdrop-blur-md bg-[rgba(10,10,10,0.6)]">
           <ul className="space-y-4 text-white">
             <li>
               <Link

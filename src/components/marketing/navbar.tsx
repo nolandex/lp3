@@ -9,11 +9,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'auto' // biar tetap bisa scroll
-    } else {
-      document.body.style.overflow = 'auto'
-    }
+    document.body.style.overflow = isOpen ? 'auto' : 'auto'
   }, [isOpen])
 
   return (

@@ -1,90 +1,77 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { XIcon } from "lucide-react";
-import { cn } from "@/functions";
-import Menu from "./menu";
-import { Button } from "../ui/button";
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { Menu, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (isOpen) {
+      document.body.style.overflow = 'auto' // biar tetap bisa scroll
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-[rgba(10,10,10,0.8)] backdrop-blur-sm",
-        isScrolled ? "py-2" : "py-4"
-      )}
-    >
-      <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Logo */}
-        <div className="flex items-center gap-6 flex-1">
-          <Link
-            href="/"
-            className="text-lg font-semibold text-foreground tracking-tight"
-          >
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[rgba(10,10,10,0.6)]">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0 text-white font-semibold text-lg">
             Bisnovo
-          </Link>
-          <div className="hidden lg:flex items-center gap-6">
-            <Menu />
           </div>
-        </div>
 
-        {/* Hamburger */}
-        <div className="flex items-center justify-end lg:hidden flex-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="p-2 w-9 h-9"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? (
-              <XIcon className="w-5 h-5 transition-all duration-300" />
-            ) : (
-              <svg
-                className="w-5 h-5 transition-all duration-300"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </Button>
+          {/* Hamburger */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white focus:outline-none"
+              aria-label="Toggle Menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex space-x-6">
+            <Link
+              href="/"
+              className="text-sm font-medium text-white hover:text-primary transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              href="/product"
+              className="text-sm font-medium text-white hover:text-primary transition-colors"
+            >
+              Product
+            </Link>
+          </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden w-full z-40 p-4 bg-[rgba(10,10,10,0.8)] backdrop-blur-sm [mask:linear-gradient(to_bottom,#000_20%,transparent_calc(100%-24px))]">
-          <ul className="space-y-4">
+        <div className="lg:hidden w-full z-40 px-4 pb-6 pt-4 bg-[rgba(10,10,10,0.6)] backdrop-blur-md">
+          <ul className="space-y-4 text-white">
             <li>
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors text-foreground"
+                className="block text-sm font-medium hover:text-primary transition-colors"
               >
                 Home
               </Link>
             </li>
             <li>
               <Link
-                href="/second-page"
+                href="/product"
                 onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors text-foreground"
+                className="block text-sm font-medium hover:text-primary transition-colors"
               >
                 Product
               </Link>
@@ -93,7 +80,5 @@ const Navbar = () => {
         </div>
       )}
     </header>
-  );
-};
-
-export default Navbar;
+  )
+}

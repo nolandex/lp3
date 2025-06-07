@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect,/`useState } from 'react'
+import { useEffect, useState } from 'react' // Fixed the import statement
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 

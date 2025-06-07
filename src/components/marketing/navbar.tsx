@@ -22,20 +22,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // useEffect untuk mengunci scroll bisa ditambahkan kembali jika diperlukan
-  // useEffect(() => {
-  //   document.body.style.overflow = isOpen ? "hidden" : "";
-  //   return () => {
-  //     document.body.style.overflow = "";
-  //   };
-  // }, [isOpen]);
-
   return (
     <>
       {/* Bagian Header Utama */}
       <header
         className={cn(
-          // Z-index lebih rendah dari overlay menu
           "fixed top-0 left-0 w-full z-40 transition-all duration-300",
           isScrolled
             ? "py-2 shadow-md bg-background/80 backdrop-blur-sm"
@@ -59,11 +50,10 @@ const Navbar = () => {
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={() => setIsOpen(true)} // Hanya untuk membuka
+                onClick={() => setIsOpen(true)}
                 className="p-2 w-8 h-8 hover:bg-deep-purple-50 focus:bg-deep-purple-50"
                 aria-label="Buka Menu"
               >
-                {/* Tidak ada lagi XIcon di sini */}
                 <Icons.menu className="w-5 h-5 transition-all duration-300" />
               </Button>
             </div>
@@ -71,23 +61,26 @@ const Navbar = () => {
         </Wrapper>
       </header>
 
-      {/* Overlay Menu Mobile - SEKARANG DI LAPISAN PALING ATAS */}
+      {/* Overlay Menu Mobile - MENGGUNAKAN INLINE STYLE UNTUK BACKGROUND */}
       <div
         className={cn(
-          // Z-index paling tinggi (z-50) untuk memastikan di atas segalanya
           "fixed inset-0 z-50 h-screen w-full lg:hidden",
-          // Background gradasi yang andal, tidak perlu gambar eksternal
-          "bg-gradient-to-b from-black via-gray-900 to-black",
           "transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
+        // --- PERUBAHAN UTAMA DI SINI ---
+        // Menghapus kelas gradasi dan menggantinya dengan inline style
+        // yang tidak bergantung pada konfigurasi Tailwind.
+        style={{
+          background: 'linear-gradient(to bottom, rgb(15 23 42), rgb(0 0 0))'
+        }}
       >
-        {/* Tombol TUTUP (X) sekarang ada DI DALAM overlay */}
+        {/* Tombol TUTUP (X) di dalam overlay */}
         <div className="absolute top-4 right-4">
           <Button
             size="icon"
             variant="ghost"
-            onClick={() => setIsOpen(false)} // Fungsi untuk menutup
+            onClick={() => setIsOpen(false)}
             className="p-2 w-8 h-8 text-white hover:bg-white/10 focus:bg-white/10"
             aria-label="Tutup Menu"
           >

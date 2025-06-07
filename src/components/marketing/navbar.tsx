@@ -3,19 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { XIcon } from "lucide-react";
-import Menu from "./menu";
-import MobileMenu from "./mobile-menu";
-import { Button } from "../ui/button";
 import { cn } from "@/functions";
+import Menu from "./menu";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -28,7 +25,7 @@ const Navbar = () => {
       )}
     >
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Left - Brand & Menu */}
+        {/* Brand */}
         <div className="flex items-center gap-6 flex-1">
           <Link
             href="/"
@@ -41,7 +38,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right - Hamburger */}
+        {/* Hamburger */}
         <div className="flex items-center justify-end lg:hidden flex-1">
           <Button
             variant="ghost"
@@ -67,7 +64,30 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+      {isOpen && (
+        <div className="lg:hidden absolute top-full left-0 w-full z-40 bg-background/95 backdrop-blur-md shadow-md border-t border-border p-4">
+          <ul className="space-y-4">
+            <li>
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
+                className="block text-sm font-medium hover:text-primary transition-colors"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/second-page"
+                onClick={() => setIsOpen(false)}
+                className="block text-sm font-medium hover:text-primary transition-colors"
+              >
+                Product
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 };

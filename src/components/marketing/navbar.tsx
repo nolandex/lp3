@@ -27,17 +27,20 @@ const Navbar = () => {
       {/* Bagian Header Utama */}
       <header
         className={cn(
-          "fixed top-0 left-0 w-full z-40 transition-all duration-300",
+          "fixed top-0 left-0 w-full z-50 transition-all duration-300", // Ubah z-index menjadi 50
           isScrolled
-            ? "py-2 shadow-md bg-background/80 backdrop-blur-sm"
-            : "py-4 bg-background/80 backdrop-blur-sm"
+            ? "py-2 shadow-md bg-background/90 backdrop-blur-sm"
+            : "py-4 bg-background/90 backdrop-blur-sm"
         )}
       >
         <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-between w-full h-12">
             {/* Kiri: Logo & Menu Desktop */}
             <div className="flex items-center flex-1">
-              <Link href="/" className="text-lg font-bold text-foreground">
+              <Link 
+                href="/" 
+                className="text-lg font-bold text-foreground z-50" // Tambahkan z-index
+              >
                 Bisnovo
               </Link>
               <div className="items-center hidden ml-4 lg:flex">
@@ -61,22 +64,17 @@ const Navbar = () => {
         </Wrapper>
       </header>
 
-      {/* Overlay Menu Mobile - MENGGUNAKAN INLINE STYLE UNTUK BACKGROUND */}
+      {/* Overlay Menu Mobile */}
       <div
         className={cn(
-          "fixed inset-0 z-50 h-screen w-full lg:hidden",
+          "fixed inset-0 z-40 h-screen w-full lg:hidden", // Turunkan z-index sedikit di bawah navbar
           "transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "translate-x-0" : "translate-x-full",
+          "bg-gradient-to-b from-slate-900 to-black" // Gunakan kelas Tailwind untuk gradient
         )}
-        // --- PERUBAHAN UTAMA DI SINI ---
-        // Menghapus kelas gradasi dan menggantinya dengan inline style
-        // yang tidak bergantung pada konfigurasi Tailwind.
-        style={{
-          background: 'linear-gradient(to bottom, rgb(15 23 42), rgb(0 0 0))'
-        }}
       >
         {/* Tombol TUTUP (X) di dalam overlay */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-50"> {/* Tambahkan z-index */}
           <Button
             size="icon"
             variant="ghost"

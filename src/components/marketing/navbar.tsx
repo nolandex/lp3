@@ -10,14 +10,10 @@ import { Button } from "../ui/button";
 import Menu from "./menu";
 import MobileMenu from "./mobile-menu";
 
-// URL untuk gambar latar belakang. Anda bisa menggantinya dengan gambar lain.
-const mobileMenuBackgroundUrl = "https://images.unsplash.com/photo-1538401633537-54832587047d?q=80&w=1920";
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
-  // Efek untuk mendeteksi scroll dan mengubah tampilan navbar
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -26,18 +22,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- EFEK UNTUK MENGUNCI SCROLL TELAH DIHAPUS ---
-  // Berdasarkan permintaan, useEffect yang mengatur `document.body.style.overflow`
-  // telah dihapus agar halaman tetap bisa di-scroll saat menu terbuka.
+  // useEffect untuk mengunci scroll bisa ditambahkan kembali jika diperlukan
+  // useEffect(() => {
+  //   document.body.style.overflow = isOpen ? "hidden" : "";
+  //   return () => {
+  //     document.body.style.overflow = "";
+  //   };
+  // }, [isOpen]);
 
   return (
     <>
       {/* Bagian Header Utama */}
       <header
         className={cn(
-          "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-          // Background semi-transparan diterapkan sejak awal agar terlihat bagus
-          // saat konten di belakangnya bisa di-scroll.
+          // Z-index lebih rendah dari overlay menu
+          "fixed top-0 left-0 w-full z-40 transition-all duration-300",
           isScrolled
             ? "py-2 shadow-md bg-background/80 backdrop-blur-sm"
             : "py-4 bg-background/80 backdrop-blur-sm"
@@ -55,43 +54,49 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Kanan: Tombol Buka/Tutup Menu Mobile */}
+            {/* Kanan: Tombol HANYA untuk MEMBUKA Menu Mobile */}
             <div className="flex items-center lg:hidden">
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={() => setIsOpen((prev) => !prev)}
+                onClick={() => setIsOpen(true)} // Hanya untuk membuka
                 className="p-2 w-8 h-8 hover:bg-deep-purple-50 focus:bg-deep-purple-50"
-                aria-label="Toggle Menu"
+                aria-label="Buka Menu"
               >
-                {isOpen ? (
-                  <XIcon className="w-5 h-5 transition-all duration-300" />
-                ) : (
-                  <Icons.menu className="w-5 h-5 transition-all duration-300" />
-                )}
+                {/* Tidak ada lagi XIcon di sini */}
+                <Icons.menu className="w-5 h-5 transition-all duration-300" />
               </Button>
             </div>
           </nav>
         </Wrapper>
       </header>
 
-      {/* Overlay untuk Menu Mobile dengan Background */}
+      {/* Overlay Menu Mobile - SEKARANG DI LAPISAN PALING ATAS */}
       <div
         className={cn(
-          "fixed inset-0 z-40 h-screen w-full lg:hidden",
-          // Kelas untuk mengatur gambar latar belakang
-          "bg-cover bg-center",
-          // Animasi transisi slide-in dari kanan
+          // Z-index paling tinggi (z-50) untuk memastikan di atas segalanya
+          "fixed inset-0 z-50 h-screen w-full lg:hidden",
+          // Background gradasi yang andal, tidak perlu gambar eksternal
+          "bg-gradient-to-b from-black via-gray-900 to-black",
           "transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
-        style={{ backgroundImage: `url(${mobileMenuBackgroundUrl})` }}
       >
-        {/* Lapisan gelap transparan di atas background agar teks mudah dibaca */}
-        <div className="absolute inset-0 w-full h-full bg-black/70 backdrop-blur-sm" />
+        {/* Tombol TUTUP (X) sekarang ada DI DALAM overlay */}
+        <div className="absolute top-4 right-4">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => setIsOpen(false)} // Fungsi untuk menutup
+            className="p-2 w-8 h-8 text-white hover:bg-white/10 focus:bg-white/10"
+            aria-label="Tutup Menu"
+          >
+            <XIcon className="w-5 h-5" />
+          </Button>
+        </div>
 
-        {/* Konten menu diletakkan di atas lapisan background */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full pt-16">
+        {/* Konten menu */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full">
           <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>

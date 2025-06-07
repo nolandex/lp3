@@ -41,12 +41,7 @@ const Navbar = () => {
       )}
     >
       <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav
-          className={cn(
-            "flex items-center justify-between w-full",
-            isOpen ? "h-[calc(100vh-24px)]" : "h-12"
-          )}
-        >
+        <nav className="flex items-center justify-between w-full h-12">
           {/* Left: Logo */}
           <div className="flex items-center flex-1">
             <Link href="/" className="text-lg font-bold text-foreground">
@@ -73,7 +68,26 @@ const Navbar = () => {
             </Button>
           </div>
         </nav>
-        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        {isOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-sm border-b border-gray-200">
+            <div className="flex items-center justify-between p-4">
+              <Link href="/" className="text-lg font-bold text-foreground">
+                Bisnovo
+              </Link>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setIsOpen(false)}
+                className="p-2 w-8 h-8 hover:bg-deep-purple-50 focus:bg-deep-purple-50 focus:outline-none"
+              >
+                <XIcon className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="px-4 pb-4">
+              <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+            </div>
+          </div>
+        )}
       </Wrapper>
     </header>
   );

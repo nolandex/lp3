@@ -10,6 +10,9 @@ import { Button } from "../ui/button";
 import Menu from "./menu";
 import MobileMenu from "./mobile-menu";
 
+// URL untuk gambar latar belakang. Anda bisa menggantinya dengan gambar lain.
+const mobileMenuBackgroundUrl = "https://images.unsplash.com/photo-1538401633537-54832587047d?q=80&w=1920";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -23,28 +26,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Efek untuk mencegah scroll pada body saat menu mobile terbuka
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  // --- EFEK UNTUK MENGUNCI SCROLL TELAH DIHAPUS ---
+  // Berdasarkan permintaan, useEffect yang mengatur `document.body.style.overflow`
+  // telah dihapus agar halaman tetap bisa di-scroll saat menu terbuka.
 
   return (
     <>
       {/* Bagian Header Utama */}
       <header
         className={cn(
-          // Z-index 50 agar selalu di atas, termasuk di atas overlay menu
           "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+          // Background semi-transparan diterapkan sejak awal agar terlihat bagus
+          // saat konten di belakangnya bisa di-scroll.
           isScrolled
             ? "py-2 shadow-md bg-background/80 backdrop-blur-sm"
-            : "py-4 bg-transparent" // Dibuat transparan saat di atas
+            : "py-4 bg-background/80 backdrop-blur-sm"
         )}
       >
         <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -79,18 +75,23 @@ const Navbar = () => {
         </Wrapper>
       </header>
 
-      {/* Overlay untuk Menu Mobile */}
+      {/* Overlay untuk Menu Mobile dengan Background */}
       <div
         className={cn(
-          // Posisi fixed untuk menutupi seluruh layar
-          "fixed inset-0 z-40 h-screen w-full bg-background lg:hidden",
+          "fixed inset-0 z-40 h-screen w-full lg:hidden",
+          // Kelas untuk mengatur gambar latar belakang
+          "bg-cover bg-center",
           // Animasi transisi slide-in dari kanan
           "transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
+        style={{ backgroundImage: `url(${mobileMenuBackgroundUrl})` }}
       >
-        {/* Kontainer untuk meletakkan menu di tengah */}
-        <div className="flex flex-col items-center justify-center h-full pt-16">
+        {/* Lapisan gelap transparan di atas background agar teks mudah dibaca */}
+        <div className="absolute inset-0 w-full h-full bg-black/70 backdrop-blur-sm" />
+
+        {/* Konten menu diletakkan di atas lapisan background */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full pt-16">
           <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>

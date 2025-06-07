@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { XIcon } from "lucide-react";
 import { cn } from "@/functions";
 import Menu from "./menu";
@@ -25,7 +25,7 @@ const Navbar = () => {
       )}
     >
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Brand */}
+        {/* Logo */}
         <div className="flex items-center gap-6 flex-1">
           <Link
             href="/"
@@ -69,13 +69,13 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden w-full z-40 bg-[rgba(10,10,10,0.8)] backdrop-blur-sm p-4">
+        <div className="lg:hidden w-full z-40 p-4 bg-[rgba(10,10,10,0.8)] backdrop-blur-sm [mask:linear-gradient(to_bottom,#000_20%,transparent_calc(100%-24px))]">
           <ul className="space-y-4">
             <li>
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors"
+                className="block text-sm font-medium hover:text-primary transition-colors text-foreground"
               >
                 Home
               </Link>
@@ -84,7 +84,7 @@ const Navbar = () => {
               <Link
                 href="/second-page"
                 onClick={() => setIsOpen(false)}
-                className="block text-sm font-medium hover:text-primary transition-colors"
+                className="block text-sm font-medium hover:text-primary transition-colors text-foreground"
               >
                 Product
               </Link>

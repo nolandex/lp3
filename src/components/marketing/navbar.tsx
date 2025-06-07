@@ -40,15 +40,15 @@ const Navbar = () => {
         isScrolled ? "py-2 shadow-md" : "py-4"
       )}
     >
-      <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 backdrop-blur-lg rounded-xl lg:rounded-2xl border border-[rgba(124,124,124,0.2)]">
-        <div
+      <Wrapper className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav
           className={cn(
             "flex items-center justify-between w-full",
             isOpen ? "h-[calc(100vh-24px)]" : "h-12"
           )}
         >
           {/* Left: Logo */}
-          <div className="flex items-center flex-1 pl-1">
+          <div className="flex items-center flex-1">
             <Link href="/" className="text-lg font-bold text-foreground">
               Bisnovo
             </Link>
@@ -72,7 +72,7 @@ const Navbar = () => {
               )}
             </Button>
           </div>
-        </div>
+        </nav>
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
       </Wrapper>
     </header>
